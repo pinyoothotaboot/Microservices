@@ -37,7 +37,7 @@ namespace InventoryService.Services
 
         }
 
-        public async Task<List<BsonDocument>> GetInventoryItemsAsync()
+        public async Task<List<InventoryItems>> GetInventoryItemsAsync()
         {
             if (_mongo.isConnected() == true)
             {

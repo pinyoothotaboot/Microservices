@@ -35,7 +35,7 @@ namespace InventoryService.Databases
             return true;
         }
 
-        public async Task<List<BsonDocument>> GetAllInventories()
+        public async Task<List<InventoryItems>> GetAllInventories()
         {
             var projection = Builders<InventoryItems>.Projection
                                                      .Include("version")
@@ -50,11 +50,13 @@ namespace InventoryService.Databases
                                                      .Include("stock_level")
                                                      .Include("stock_thresh")
                                                      .Include("product_id")
-                                                     .Include("created_by");
+                                                     .Include("created_by")
+                                                     .Include("visible");
 
             return await _inventoryCollection
                 .Find(new BsonDocument())
-                .Project<BsonDocument>(projection)
+                .Project<InventoryItems>(projection)
+                .Limit(1000)
                 .ToListAsync();
         }
 
@@ -119,15 +121,12 @@ namespace InventoryService.Databases
                 var result = await _inventoryCollection.UpdateOneAsync(filter, update);
 
                 check = result.ModifiedCount != 0;
-
             }
             catch (MongoException ex)
             {
                 throw new Exception(ex.Message);
             }
-
             return check;
-
         }
 
         public async Task CreateIndexOnNameField()

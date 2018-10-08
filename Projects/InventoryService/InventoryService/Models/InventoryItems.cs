@@ -7,7 +7,7 @@ using MongoDB.Bson.Serialization.Attributes;
 namespace InventoryService.Models
 {
     public class InventoryItems
-    {   
+    {
         [BsonId]
         [BsonRequired]
         public ObjectId Id { get; protected set; }
@@ -19,6 +19,7 @@ namespace InventoryService.Models
         [BsonElement("creation_date")]
         [BsonRequired]
         public DateTime Creation_Date { get; protected set; }
+        //public string Creation_Date { get; protected set; }
 
         [BsonElement("start_date")]
         public DateTime Start_Date { get; protected set; }
@@ -71,43 +72,17 @@ namespace InventoryService.Models
         [BsonRequired]
         public bool Visible { get; protected set; }
 
-       
+
         protected InventoryItems()
         {
         }
 
-        public InventoryItems(int version,DateTime start_date,DateTime end_date,
-                              string display_name,string description,string catalog_ref_id,
-                              string availability_status,DateTime availability_date,
-                              int stock_level,int stock_thresh,string product_id,
+        public InventoryItems(int version, DateTime start_date, DateTime end_date,
+                              string display_name, string description, string catalog_ref_id,
+                              string availability_status, DateTime availability_date,
+                              int stock_level, int stock_thresh, string product_id,
                               string created_by)
         {
-
-            if (string.IsNullOrWhiteSpace(display_name))
-            {
-                throw new Exception("Inventory display name can't be empty.");
-            }
-
-            if (string.IsNullOrWhiteSpace(catalog_ref_id))
-            {
-                throw new Exception("Inventory catalog ref id can't be empty.");
-            }
-
-            if (string.IsNullOrWhiteSpace(availability_status))
-            {
-                throw new Exception("Inventory availability status can't be empty.");
-            }
-
-            if (string.IsNullOrWhiteSpace(product_id))
-            {
-                throw new Exception("Inventory product id can't be empty.");
-            }
-
-            if (string.IsNullOrWhiteSpace(created_by))
-            {
-                throw new Exception("Inventory created by can't be empty.");
-            }
-
             Id = ObjectId.GenerateNewId();
             Version = version;
             Creation_Date = DateTime.UtcNow;

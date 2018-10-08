@@ -12,7 +12,7 @@ namespace InventoryService.Services
     {
         Task<InventoryItems> AddInventoryItemsAsync(InventoryItems items);
 
-        Task<List<BsonDocument>> GetInventoryItemsAsync();
+        Task<List<InventoryItems>> GetInventoryItemsAsync();
         
     }
 }
